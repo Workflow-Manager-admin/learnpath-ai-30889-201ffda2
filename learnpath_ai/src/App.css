@@ -321,23 +321,51 @@ body {
   background-color: var(--accent);
   color: var(--primary);
   border: none;
-  border-radius: 6px;
-  padding: 10px 22px;
-  font-size: 1rem;
-  font-weight: 600;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: 1em;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+  outline: none;
+  box-shadow: 0 2px 8px 0 rgba(64,145,108,0.06);
+  transition: 
+    background 0.23s cubic-bezier(.45,1.12,.55,1.0), 
+    color 0.19s, 
+    transform 0.17s, 
+    box-shadow 0.16s;
+  position: relative;
+  z-index: 5;
+  min-width: 46px;
 }
-
-.btn:hover {
-  background-color: var(--secondary);
+.btn:focus, .btn:active {
+  outline: none;
+  box-shadow: var(--focus-shadow);
+  background: var(--secondary);
   color: #fff;
+  transform: scale(1.035);
+}
+.btn:hover {
+  background: linear-gradient(100deg, var(--secondary) 70%, var(--accent) 100%);
+  color: #fff;
+  transform: translateY(-2.5px) scale(1.04);
+  box-shadow: 0 6px 18px 0 rgba(64,145,108,0.14);
+}
+.btn:active {
+  transform: scale(0.98);
 }
 
 .btn-large {
-  padding: 13px 26px;
+  padding: 14px 32px;
   font-size: 1.13rem;
+  border-radius: 12px;
 }
+
+.btn[disabled], .btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.45);
+}
+
 
 /* --- Responsive layout improvements, better stacking and no overlap between main zones --- */
 @media (max-width: 1000px) {
