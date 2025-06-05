@@ -294,7 +294,7 @@ body {
 /* Roadmap in center */
 .roadmap-section {
   background: var(--card-bg);
-  color: var(--primary);
+  color: var(--text-color);
   border-radius: var(--card-radius);
   box-shadow: var(--card-shadow);
   flex: 2 1 500px;
