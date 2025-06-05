@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import { getMockResourcesForStep } from './resourceStubs';
 
 /**
  * PUBLIC_INTERFACE
@@ -111,10 +112,44 @@ function App() {
     return { completed, total: milestones.length };
   };
 
-  // Step Render: collapsible with progress, title, detail, placeholder for resources
+  // Step Render: collapsible with progress, title, detail, resource aggregation
   const RoadmapStep = ({ idx, step }) => {
     const status = progress[idx] || 'not_started';
     const expandedStep = expanded[idx];
+
+    // Get mock resources when expanded (for demo it's instant)
+    const resourceList = expandedStep ? getMockResourcesForStep(step.title) : [];
+
+    // Utility for badge colors per platform
+    const platformColors = {
+      YouTube: "#ff3232",
+      Udemy: "#57011d",
+      Coursera: "#0056d2",
+      edX: "#2d6a4f",
+      FreeCodeCamp: "#2a6b36",
+      W3Schools: "#014a82",
+      GeeksforGeeks: "#31792b",
+      Medium: "#12100e",
+      "Dev.to": "#1a374d",
+      GitHub: "#1c1c1c"
+    };
+
+    // Display resource meta-info
+    const resourceMeta = (res) => (
+      <span style={{
+        marginLeft: 6,
+        fontSize: "0.89em",
+        padding: "2px 7px",
+        background: platformColors[res.platform] || "#eee",
+        color: "#fff",
+        borderRadius: 6,
+        marginRight: 8,
+        letterSpacing: "0.02em"
+      }}>{res.platform}</span>
+    );
+
+    // Rating stars
+    const stars = (r) => "★".repeat(Math.floor(r)) + (r % 1 >= 0.5 ? "½" : "");
 
     return (
       <li className="roadmap-step" style={{
@@ -157,24 +192,12 @@ function App() {
           </span>
           {statusMeta[status].icon}
           {step.title}
-          <span style={{
-            marginLeft: 'auto',
-            background: statusMeta[status].color,
-            color: (status === 'not_started' ? "#444" : "#fff"),
-            fontWeight: 600,
-            fontSize: "0.97rem",
-            padding: "4.5px 12px",
-            borderRadius: 12,
-            minWidth: 70,
-            textAlign: 'center',
-            marginRight: 4,
-            opacity: 0.92,
-            letterSpacing: "0.01em"
-          }}
+          <span
             tabIndex={-1}
             onClick={e => { e.stopPropagation(); advanceStatus(idx); }}
             title="Click to update progress"
             style={{
+              marginLeft: 'auto',
               background: statusMeta[status].color,
               color: (status === 'not_started' ? "#444" : "#fff"),
               fontWeight: 600,
@@ -184,6 +207,7 @@ function App() {
               minWidth: 70,
               textAlign: 'center',
               marginRight: 4,
+              opacity: 0.92,
               cursor: 'pointer',
               border: "none"
             }}
@@ -211,10 +235,65 @@ function App() {
               background: "#f5f7fa",
               borderRadius: "8px"
             }}>
-              {/* Placeholder: Resource list */}
               <strong>Resources:</strong>
               <ul style={{ margin: "10px 0 0 0", paddingLeft: 0 }}>
-                <li><em>(Integration coming soon)</em></li>
+                {resourceList.length === 0 ? (
+                  <li style={{ color: "#888" }}><em>No resources available.</em></li>
+                ) : (
+                  resourceList.map((res, ri) => (
+                    <li key={ri} style={{
+                      marginBottom: 9,
+                      display: "flex",
+                      alignItems: "center",
+                      lineHeight: 1.45,
+                      fontSize: "0.97em"
+                    }}>
+                      <a
+                        href={res.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          color: "var(--secondary)",
+                          textDecoration: "underline",
+                          fontWeight: 500,
+                          marginRight: 5,
+                          maxWidth: 270,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap"
+                        }}
+                      >
+                        {res.title}
+                      </a>
+                      {resourceMeta(res)}
+                      <span style={{
+                        color: "#f5ad00",
+                        marginRight: 7,
+                        fontSize: "1em"
+                      }}>{stars(res.rating)}</span>
+                      <span style={{
+                        marginRight: 6,
+                        fontSize: "0.94em",
+                        color: "#28876e"
+                      }}>{res.estimatedTime}</span>
+                      <span style={{
+                        background: "#eee",
+                        borderRadius: "6px",
+                        padding: "2px 8px",
+                        fontSize: "0.9em",
+                        color: "#15504c",
+                        marginRight: 6
+                      }}>{res.type.charAt(0).toUpperCase() + res.type.slice(1)}</span>
+                      <span style={{
+                        background: "#f6eadd",
+                        color: "#7b4e00",
+                        borderRadius: "6px",
+                        padding: "1px 7px",
+                        fontSize: "0.89em"
+                      }}>{res.difficulty}</span>
+                    </li>
+                  ))
+                )}
               </ul>
             </div>
           </div>
