@@ -329,9 +329,9 @@ body {
 }
 
 .roadmap-step {
-  box-shadow: 0 3px 19px 0 rgba(64,145,108,0.14);
+  box-shadow: 0 3px 19px 0 rgba(59,130,246,0.10); /* blue accent shadow */
   border-radius: 18px;
-  background: #fff;
+  background: #202e48;
   margin-bottom: 20px;
   padding: 0;
   transition: box-shadow 0.18s, border 0.17s, background 0.16s;
@@ -346,8 +346,8 @@ body {
 .roadmap-step.expanded {
   z-index: 10;
   border: 2.6px solid var(--accent);
-  box-shadow: 0 8px 28px 0 rgba(64,145,108,0.20);
-  background: #fcfbff;
+  box-shadow: 0 8px 28px 0 rgba(59,130,246,0.17); /* stronger azure accent */
+  background: #203259; /* Slightly lighter navy when open */
   /* Animated accent bar left */
 }
 .roadmap-step .step-toggle:focus {
