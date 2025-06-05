@@ -262,24 +262,143 @@ body {
   font-size: 1.13rem;
 }
 
+/* --- Responsive layout improvements, better stacking and no overlap between main zones --- */
 @media (max-width: 1000px) {
   .content-layout {
     flex-direction: column;
-    gap: 18px;
+    gap: 22px;
     align-items: stretch;
+    width: 100%;
+    margin: 24px 0 0 0;
   }
   .sidebar, .filters-section {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
     flex-direction: row;
-    width: 100%;
-    min-width: 0;
     justify-content: space-between;
+    align-items: stretch;
+    box-sizing: border-box;
+    margin: 0;
   }
   .sidebar {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    gap: 18px;
   }
   .roadmap-section {
     min-width: 0;
     width: 100%;
     margin: 0;
+    padding: 32px 10px 30px 10px;
+    box-sizing: border-box;
   }
+  .filters-section {
+    margin-top: 18px;
+    margin-bottom: 0;
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 700px) {
+  .container {
+    padding: 0 10px;
+  }
+  .goal-input-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 7px;
+    padding: 22px 2vw 16px 2vw;
+  }
+  .goal-input {
+    width: 100%;
+    min-width: 0;
+    margin: 0 0 7px 0;
+    flex: 1 1 100%;
+  }
+  .goal-search-btn {
+    width: 100%;
+    min-width: 0;
+    margin-top: 0px;
+    padding: 13px 0;
+    font-size: 1.04rem;
+  }
+  .content-layout {
+    margin: 10px 0 7px 0;
+    gap: 15px;
+  }
+  .sidebar {
+    flex-direction: column;
+    padding: 18px 10px 16px 10px;
+    gap: 14px;
+    min-width: 0;
+    width: 100%;
+    border-radius: 10px;
+  }
+  .filters-section {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    margin: 0 0 4px 0;
+    border-radius: 10px;
+    padding: 16px 8px;
+  }
+  .roadmap-section {
+    padding: 24px 6px 20px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    padding-top: 18px;
+    margin-top: 7px;
+  }
+  .roadmap-section, .sidebar, .filters-section {
+    border-radius: 7px;
+    padding: 13px 3vw;
+    min-width: 0 !important;
+  }
+  .roadmap-section {
+    margin: 0;
+    padding: 13px 3vw 12px 3vw;
+    min-width: 0;
+  }
+  .goal-input-section {
+    padding: 13px 1vw 7px 1vw;
+  }
+}
+
+/* --- Minor desktop improvements for clarity --- */
+@media (min-width: 1001px) {
+  .content-layout {
+    gap: 40px;
+    margin: 36px 24px 28px 24px;
+    align-items: flex-start;
+  }
+  .sidebar, .filters-section {
+    min-width: 182px;
+    max-width: 280px;
+  }
+  .roadmap-section {
+    margin: 0 20px;
+    max-width: 880px;
+    min-width: 340px;
+  }
+}
+
+/* Assure stacking/overlap never happens for main zones */
+.sidebar,
+.filters-section,
+.roadmap-section {
+  z-index: 2;
+  position: relative;
+}
+
+.roadmap-section {
+  z-index: 3;
+}
+
+.goal-input-section {
+  z-index: 5;
+  position: relative;
 }
