@@ -43,13 +43,63 @@ body {
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   letter-spacing: 1px;
+  color: var(--accent);
+  min-width: 0;
+  padding-left: 0;
+  user-select: none;
+}
+
+.logo-svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 7px;
+  min-width: 28px;
+  min-height: 20px;
+  line-height: 0;
+  /* For mobile, reduce size slightly */
+}
+
+@media (max-width: 700px) {
+  .logo .logo-svg svg {
+    width: 20px !important;
+    height: 16px !important;
+    min-width: 15px !important;
+    min-height: 14px !important;
+  }
+}
+
+/* Remove old logo-symbol (if used elsewhere it remains styled) */
+.logo-symbol {
   color: var(--accent);
 }
 
-.logo-symbol {
-  color: var(--accent);
+/* Ensure container aligns logo & text to the left edge cleanly */
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 32px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar .logo {
+  margin-left: 0;
+}
+
+/* Tighten navbar left padding for better logo flush to edge on small screens */
+@media (max-width: 480px) {
+  .navbar {
+    padding-left: 0px;
+  }
+  .container {
+    padding-left: 4px;
+  }
 }
 
 .container {
