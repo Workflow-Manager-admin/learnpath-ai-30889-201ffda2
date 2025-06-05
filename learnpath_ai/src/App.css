@@ -1,11 +1,12 @@
 :root {
-  --primary: #2D6A4F;
-  --secondary: #40916C;
-  --accent: #FFD166;
+  --primary: #1E2A78;
+  --secondary: #00C2C7;
+  --accent: #FFC94A;
+  --neutral: #F3F4F6;
   --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255,255,255,0.1);
+  --text-color: #333333;
+  --text-secondary: rgba(51, 51, 51, 0.65);
+  --border-color: rgba(30,42,120,0.15);
 }
 
 body {
