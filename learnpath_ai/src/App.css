@@ -167,7 +167,7 @@ body {
   min-height: 320px;
   padding: 36px 32px;
   margin: 0 14px;
-  box-shadow: 0 3px 18px 0 rgba(64,145,108, 0.08);
+  box-shadow: 0 3px 18px 0 rgba(30,42,120, 0.10);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -183,7 +183,7 @@ body {
 
 .roadmap-placeholder {
   color: var(--primary);
-  background: #f5f7fa;
+  background: var(--neutral);
   border: 1px dashed var(--secondary);
   padding: 30px;
   font-size: 1.08rem;
