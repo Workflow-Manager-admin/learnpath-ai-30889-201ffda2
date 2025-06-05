@@ -395,7 +395,13 @@ function App() {
               <strong>Resources:</strong>
               <ul style={{ margin: "10px 0 0 0", paddingLeft: 0 }}>
                 {resourceList.length === 0 ? (
-                  <li style={{ color: "#888" }}><em>No resources available.</em></li>
+                  <li style={{ color: "#888" }}>
+                    <em>
+                      {filterDifficulty !== "all" || filterPlatform !== "all" || filterTime !== "any"
+                        ? "No resources match the selected filters."
+                        : "No resources available."}
+                    </em>
+                  </li>
                 ) : (
                   resourceList.map((res, ri) => (
                     <li key={ri} style={{
