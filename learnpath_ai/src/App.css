@@ -319,9 +319,9 @@ body {
 }
 
 .roadmap-placeholder {
-  color: var(--primary);
-  background: var(--neutral);
-  border: 1px dashed var(--secondary);
+  color: var(--text-color);
+  background: #182038;
+  border: 1px dashed var(--accent);
   padding: 32px;
   font-size: 1.09rem;
   border-radius: 10px;
