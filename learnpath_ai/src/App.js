@@ -413,6 +413,8 @@ function App() {
               {/* Progress summary and steps will be rendered here */}
               {milestones.length === 0 ? (
                 <div className="progress-placeholder">Your learning progress will appear here.</div>
+              ) : loadingProgress ? (
+                <div className="progress-placeholder"><em>Loading saved progress...</em></div>
               ) : (
                 <>
                   <div style={{
