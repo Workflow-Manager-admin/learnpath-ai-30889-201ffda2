@@ -76,6 +76,23 @@ function App() {
   // Track loading state for progress (while fetching from Firebase)
   const [loadingProgress, setLoadingProgress] = useState(false);
 
+  // FILTER STATE
+  // PUBLIC_INTERFACE
+  // Filters selected by user. Store as minimal strings, defaults to "all"/"any".
+  const [filterDifficulty, setFilterDifficulty] = useState('all');
+  const [filterPlatform, setFilterPlatform] = useState('all');
+  const [filterTime, setFilterTime] = useState('any');
+
+  // Handlers for filter select controls
+  function handleFilterDifficulty(e) {
+    setFilterDifficulty(e.target.value);
+  }
+  function handleFilterPlatform(e) {
+    setFilterPlatform(e.target.value);
+  }
+  function handleFilterTime(e) {
+    setFilterTime(e.target.value);
+  }
   // Generate a unique session id when the app loads (persist in sessionStorage)
   function getSessionId() {
     let ses = sessionStorage.getItem("lpath_session_id");
