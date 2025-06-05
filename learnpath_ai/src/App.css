@@ -81,7 +81,7 @@ body {
   padding: 28px 0 20px 0;
   justify-content: center;
   background: var(--primary);
-  box-shadow: 0 1px 8px 0 rgba(64,145,108,0.10);
+  box-shadow: 0 1px 8px 0 rgba(30,42,120, 0.08);
 }
 
 .goal-input {
