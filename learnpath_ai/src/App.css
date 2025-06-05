@@ -1,26 +1,29 @@
 :root {
-  --primary: #1E2A78;
-  --secondary: #00C2C7;
-  --accent: #FFC94A;
-  --neutral: #F3F4F6;
-  --kavia-dark: #1A1A1A;
-  --text-color: #333333;
-  --text-secondary: rgba(51, 51, 51, 0.74);
-  --border-color: rgba(30,42,120,0.15);
+  /* Theme Colors */
+  --primary: #0F172A;         /* Midnight Navy */
+  --secondary: #22C55E;       /* Neon Green */
+  --accent: #3B82F6;          /* Azure Blue */
+  --background: #1E293B;      /* Slate Gray */
+  --text-color: #F8FAFC;      /* Cool White */
+  --text-secondary: rgba(248, 250, 252, 0.7);
+  --border-color: rgba(59, 130, 246, 0.13); /* Accent blue, faint for borders */
 
-  --card-bg: #fff;
-  --card-shadow: 0 6px 24px 0 rgba(30, 42, 120, 0.14);
+  /* Cards, Shadows & Corners */
+  --card-bg: #22304a; /* Slightly lighter than bg for contrast */
+  --card-shadow: 0 6px 24px 0 rgba(15, 23, 42, 0.17);
   --card-radius: 17px;
-  --focus-shadow: 0 0 0 2px var(--accent), 0 4px 18px 0 rgba(65,140,154,0.08);
+  --focus-shadow: 0 0 0 2px var(--accent), 0 4px 18px 0 rgba(59,130,246,0.14);
 
-  --sidebar-bg: #fcfcfd;
-  --sidebar-highlight: linear-gradient(90deg,var(--secondary) 0 3px,transparent 3px 100%);
+  /* Sidebar & Accents */
+  --sidebar-bg: #192132; /* Deeper slate for sidebar */
+  --sidebar-highlight: linear-gradient(90deg, var(--secondary) 0 3px, transparent 3px 100%);
   --active-step-line: linear-gradient(90deg, var(--accent), var(--secondary) 65%);
 
+  /* Inputs */
   --input-focus-border: var(--accent);
-  --input-bg: #fff;
+  --input-bg: #162032;
   --input-border: var(--secondary);
-  --input-error: #bee2f3;
+  --input-error: #25643b;
 }
 
 /* Utility classes for spacing, visually-hidden */
