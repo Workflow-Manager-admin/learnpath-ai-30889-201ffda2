@@ -18,8 +18,21 @@ function App() {
   // State: Track expanded/collapsed steps by index
   const [expanded, setExpanded] = useState({});
 
-  // State: Track step progress: { idx: 'not_started'|'in_progress'|'completed' }
+  // State: Track step progress: { idx: 'not_started'|'in_progress'|'completed'|'skipped' }
   const [progress, setProgress] = useState({});
+
+  // Track loading state for progress (while fetching from Firebase)
+  const [loadingProgress, setLoadingProgress] = useState(false);
+
+  // Generate a unique session id when the app loads (persist in sessionStorage)
+  function getSessionId() {
+    let ses = sessionStorage.getItem("lpath_session_id");
+    if (!ses) {
+      ses = "sess_" + Math.random().toString(36).slice(2, 12) + "_" + Date.now();
+      sessionStorage.setItem("lpath_session_id", ses);
+    }
+    return ses;
+  }
 
   // Placeholder: Step progress states and their colors/icons
   const statusMeta = {
@@ -37,6 +50,11 @@ function App() {
       label: 'Completed',
       color: 'var(--secondary)',
       icon: <span style={{ marginRight: 7, fontSize: 18, color: 'var(--secondary)' }} title="Completed">✔️</span>
+    },
+    skipped: {
+      label: 'Skipped',
+      color: '#b27b13',
+      icon: <span style={{ marginRight: 7, fontSize: 18, color: '#b27b13' }} title="Skipped">⤼</span>
     }
   };
 
@@ -98,13 +116,31 @@ function App() {
   // Toggle expand/collapse for a step
   const toggleExpand = idx => setExpanded(exp => ({ ...exp, [idx]: !exp[idx] }));
 
-  // Cycle status: not_started → in_progress → completed → not_started ...
-  const advanceStatus = idx => setProgress(pr => {
-    const current = pr[idx] || 'not_started';
-    const states = ['not_started', 'in_progress', 'completed'];
-    const next = states[(states.indexOf(current) + 1) % states.length];
-    return { ...pr, [idx]: next };
-  });
+  // Cycle status: not_started → in_progress → completed → skipped → not_started ...
+  const advanceStatus = idx => {
+    setProgress(pr => {
+      const current = pr[idx] || 'not_started';
+      const states = ['not_started', 'in_progress', 'completed', 'skipped'];
+      const next = states[(states.indexOf(current) + 1) % states.length];
+      // Save after update
+      const updated = { ...pr, [idx]: next };
+      persistProgress(goalInput, updated);
+      return updated;
+    });
+  };
+
+  /**
+   * Save progress to Firebase. Assumes sessionId as user.
+   */
+  async function persistProgress(goalTxt, prog) {
+    const userId = getSessionId();
+    try {
+      await saveUserProgress(userId, goalTxt, prog);
+    } catch (e) {
+      // Optionally handle error here
+      // console.error("Could not save progress", e);
+    }
+  }
 
   // Calculate overall progress (number completed/total)
   const calculateProgress = () => {
