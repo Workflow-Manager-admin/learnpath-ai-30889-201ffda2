@@ -192,14 +192,14 @@ body {
 }
 
 .filters-section {
-  background: #f2f7f0;
+  background: var(--neutral);
   color: var(--primary);
   border-radius: 13px;
   min-width: 190px;
   max-width: 235px;
   padding: 22px 15px;
   align-self: flex-start;
-  box-shadow: 0 2px 12px 0 rgba(255,209,102,0.08);
+  box-shadow: 0 2px 12px 0 rgba(30,42,120,0.09);
   display: flex;
   flex-direction: column;
   gap: 12px;
