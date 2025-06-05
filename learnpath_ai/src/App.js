@@ -528,4 +528,182 @@ function App() {
   );
 }
 
+/**
+ * Stub logic for smart suggestions and intelligent content ranking.
+ * Decides which suggestions to show based on progress, milestones, and (optionally) feedback.
+ * For demo purposes, uses simple mock logic; in a real solution, would use user data, feedback, ML/AI, etc.
+ */
+function SmartSuggestions({ milestones, progress, feedback }) {
+  // Mock calculation: suggest next incomplete step, recommend refreshing completed or skipped early steps
+  if (!milestones?.length) {
+    return <div className="suggestions-placeholder">AI-powered recommendations and tips will show up here.</div>;
+  }
+
+  // Step progress analysis
+  const incompleteIdx = milestones.findIndex((_, idx) =>
+    progress[idx] !== "completed"
+  );
+
+  const completedCount = Object.values(progress).filter(p => p === "completed").length;
+  const skippedCount = Object.values(progress).filter(p => p === "skipped").length;
+  const total = milestones.length;
+
+  // Dynamic content ranking stub: rank unfinished resources higher, nudge resume
+  let suggestions = [];
+  if (completedCount === 0 && incompleteIdx === 0) {
+    // Fresh start
+    suggestions.push({
+      type: "get_started",
+      text: `Start with "${milestones[0].title}" to build your foundation!`,
+    });
+  } else if (incompleteIdx > 0 && incompleteIdx < total) {
+    suggestions.push({
+      type: "next_step",
+      text: `Continue to <strong>${milestones[incompleteIdx].title}</strong> for your next milestone.`,
+    });
+    if (skippedCount > 0) {
+      suggestions.push({
+        type: "skipped_reminder",
+        text: `Consider revisiting skipped steps to strengthen your understanding.`,
+      });
+    }
+  } else if (completedCount === total) {
+    suggestions.push({
+      type: "congrats",
+      text: "🎉 Fantastic! You've completed your personalized path. Explore advanced topics or review previous steps for mastery.",
+    });
+  } else if (skippedCount === total) {
+    suggestions.push({
+      type: "all_skipped",
+      text: "You have skipped all steps. You might want to restart or pick a new goal.",
+    });
+  } else {
+    suggestions.push({
+      type: "keep_going",
+      text: "Keep up the great work! Progress steadily for the best results.",
+    });
+  }
+
+  // Intelligent content ranking stub: recommend best-rated resource for next step
+  let resourceRecommendation = null;
+  if (incompleteIdx >= 0 && incompleteIdx < milestones.length) {
+    // Fetch and rank mock resources for the recommended step
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const { getMockResourcesForStep } = require("./resourceStubs");
+      // fallback for static analysis
+      let getResources = getMockResourcesForStep;
+      if (!getResources) getResources = window.getMockResourcesForStep;
+      const resources = getResources
+        ? getResources(milestones[incompleteIdx].title)
+        : [];
+      if (resources.length) {
+        // Rank: highest rating, then lowest estimatedTime, then beginner difficulty
+        const ranked = resources
+          .slice()
+          .sort((a, b) => {
+            if (b.rating !== a.rating) return b.rating - a.rating;
+            // Prefer shorter content
+            if (typeof a.estimatedTime === "string" && typeof b.estimatedTime === "string") {
+              const aMins = parseInt(a.estimatedTime) || 999;
+              const bMins = parseInt(b.estimatedTime) || 999;
+              if (aMins !== bMins) return aMins - bMins;
+            }
+            // Prefer beginner
+            if (a.difficulty === "Beginner" && b.difficulty !== "Beginner") return -1;
+            if (b.difficulty === "Beginner" && a.difficulty !== "Beginner") return 1;
+            return 0;
+          });
+        const topRes = ranked[0];
+        resourceRecommendation = topRes;
+      }
+    } catch (e) {
+      // no-op
+      resourceRecommendation = null;
+    }
+  }
+
+  return (
+    <div style={{padding: 0, display: "flex", flexDirection: "column", gap: 7}}>
+      {suggestions.map((s, i) => (
+        <div
+          key={s.type + i}
+          style={{
+            marginBottom: 5,
+            fontSize: "0.98em",
+            background: "rgba(255,255,255,0.06)",
+            borderRadius: 6,
+            padding: "9px 12px",
+            color: "var(--text-secondary)",
+            fontWeight: (s.type === "congrats" ? 700 : 500),
+            borderLeft: s.type === "congrats" ? "3px solid var(--accent)" : undefined
+          }}
+          dangerouslySetInnerHTML={{ __html: s.text }}
+        />
+      ))}
+
+      {resourceRecommendation && (
+        <div
+          style={{
+            background: "#f5eecc",
+            color: "#693d02",
+            borderRadius: 6,
+            fontWeight: 600,
+            fontSize: "0.99em",
+            marginTop: 6,
+            padding: "10px 13px",
+            border: "1px solid #FFD166"
+          }}
+        >
+          <span role="img" aria-label="star" style={{fontSize: "1.15em"}}>⭐️</span>
+          Recommended for you:
+          <br />
+          <a
+            href={resourceRecommendation.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: "var(--secondary)",
+              fontWeight: 700,
+              textDecoration: "underline"
+            }}
+          >
+            {resourceRecommendation.title}
+          </a>
+          <span
+            style={{
+              marginLeft: 7,
+              background: "#40916C",
+              color: "#fff",
+              fontSize: "0.93em",
+              borderRadius: 6,
+              padding: "3px 10px",
+              fontWeight: 500
+            }}>
+            {resourceRecommendation.platform}
+          </span>
+          <span style={{
+            background: "#ffeead",
+            color: "#7b4e00",
+            borderRadius: "6px",
+            padding: "2px 8px",
+            marginLeft: 6,
+            fontSize: "0.92em"
+          }}>{resourceRecommendation.difficulty}</span>
+          <span style={{
+            marginLeft: 7,
+            color: "#f2ad00"
+          }}>({resourceRecommendation.rating}★)</span>
+        </div>
+      )}
+
+      {!suggestions.length && !resourceRecommendation && (
+        <div className="suggestions-placeholder">
+          AI-powered recommendations and tips will show up here.
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default App;
