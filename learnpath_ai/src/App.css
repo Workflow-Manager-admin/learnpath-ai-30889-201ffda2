@@ -225,7 +225,7 @@ body {
 /* Sidebar for progress/suggestions */
 .sidebar {
   background: var(--sidebar-bg);
-  color: var(--primary);
+  color: var(--text-color);
   border-radius: 19px;
   padding: 28px 19px 27px 15px;
   width: 254px;
@@ -233,7 +233,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 29px;
-  box-shadow: 0 2px 16px 0 rgba(30,42,120,0.19);
+  box-shadow: 0 2px 16px 0 rgba(15,23,42,0.19);
   border: 1px solid var(--border-color);
   position: relative;
   z-index: 4;
@@ -251,8 +251,8 @@ body {
 
 .progress-placeholder, .suggestions-placeholder {
   font-size: 0.985rem;
-  color: var(--secondary);
-  background: #f3f8f6;
+  color: var(--accent);
+  background: #172031;
   border-radius: 9px;
   padding: 14px 13px;
   margin-top: 8px;
