@@ -222,32 +222,71 @@ body {
 
 /* Sidebar for progress/suggestions */
 .sidebar {
-  background: var(--secondary);
-  color: #fff;
-  border-radius: 13px;
-  padding: 26px 18px;
-  width: 250px;
-  min-width: 194px;
+  background: var(--sidebar-bg);
+  color: var(--primary);
+  border-radius: 19px;
+  padding: 28px 19px 27px 15px;
+  width: 254px;
+  min-width: 188px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  box-shadow: 0 2px 12px 0 rgba(0,194,199, 0.11);
+  gap: 29px;
+  box-shadow: 0 2px 16px 0 rgba(30,42,120,0.19);
+  border: 1px solid var(--border-color);
+  position: relative;
+  z-index: 4;
 }
 
-.progress-tracker h2, .smart-suggestions h2 {
-  margin: 0 0 7px 0;
-  font-size: 1.2rem;
+.progress-tracker h2,
+.smart-suggestions h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.23rem;
   color: var(--accent);
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+  padding-left: 4px;
 }
+
 .progress-placeholder, .suggestions-placeholder {
-  font-size: 0.96rem;
-  color: var(--text-secondary);
-  background: var(--neutral);
-  border-radius: 7px;
-  padding: 16px;
-  margin-top: 6px;
+  font-size: 0.985rem;
+  color: var(--secondary);
+  background: #f3f8f6;
+  border-radius: 9px;
+  padding: 14px 13px;
+  margin-top: 8px;
+  opacity: 0.94;
+  border: 1.1px solid var(--border-color);
+}
+
+.progress-tracker ol {
+  margin: 0 0 0 8px;
+  padding: 0;
+  font-size: 1.05em;
+}
+.progress-tracker li {
+  line-height: 1.33;
+  min-height: 33px;
+  font-size: 1rem;
+  color: var(--secondary);
+  margin-bottom: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  border-left: 3.7px solid transparent;
+  padding-left: 7px;
+  border-radius: 4px 12px 12px 4px;
+  transition: border 0.18s, color 0.13s;
+}
+.progress-tracker li[aria-current="step"], .progress-tracker li.active {
+  background: var(--sidebar-highlight);
+  border-left: 3.7px solid var(--accent);
+  color: var(--primary);
+  font-weight: 700;
+}
+.progress-tracker li .statusBadge {
+  margin-left: auto;
+  margin-right: 2px;
+  font-size: 0.95em;
 }
 
 /* Roadmap in center */
