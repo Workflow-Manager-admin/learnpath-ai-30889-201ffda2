@@ -8,6 +8,8 @@ import { saveUserProgress, fetchUserProgress } from './firebase';
  * Main App container for LearnPath AI.
  * Scaffolds the UI into: Top goal input/search bar, visual roadmap area,
  * sidebar for progress and suggestions, and filter controls.
+ * 
+ * Progress on each roadmap step is tracked in Firebase per user session.
  */
 function App() {
   // State for the user's learning goal
