@@ -695,7 +695,7 @@ body {
 
 .roadmap-step .step-status-badge:focus, .roadmap-step .step-status-badge:active {
   box-shadow: var(--focus-shadow);
-  background: var(--secondary);
-  color: #fff;
+  background: var(--accent);
+  color: var(--primary);
 }
 
