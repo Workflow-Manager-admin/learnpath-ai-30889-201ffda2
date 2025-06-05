@@ -250,7 +250,32 @@ function App() {
     const expandedStep = expanded[idx];
 
     // Get mock resources when expanded (for demo it's instant)
-    const resourceList = expandedStep ? getMockResourcesForStep(step.title) : [];
+    let resourceList = expandedStep ? getMockResourcesForStep(step.title) : [];
+
+    // Resource filtering logic
+    if (expandedStep) {
+      if (filterDifficulty !== "all") {
+        resourceList = resourceList.filter(r =>
+          (r.difficulty === filterDifficulty)
+        );
+      }
+      if (filterPlatform !== "all") {
+        resourceList = resourceList.filter(r =>
+          (r.platform === filterPlatform)
+        );
+      }
+      if (filterTime !== "any") {
+        resourceList = resourceList.filter(r => {
+          const m = getResourceMinutes(r.estimatedTime);
+          if (m === null) return false; // Hide "Varies" etc. if filtering
+          if (filterTime === "<30") return m < 30;
+          if (filterTime === "30-60") return m >= 30 && m <= 60;
+          if (filterTime === "1-3") return m > 60 && m <= 180;
+          if (filterTime === "3+") return m > 180;
+          return true;
+        });
+      }
+    }
 
     // Utility for badge colors per platform
     const platformColors = {
