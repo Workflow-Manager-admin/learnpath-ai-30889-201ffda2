@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import { getMockResourcesForStep } from './resourceStubs';
+import { saveUserProgress, fetchUserProgress } from './firebase';
 
 /**
  * PUBLIC_INTERFACE
