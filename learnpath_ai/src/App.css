@@ -5,9 +5,36 @@
   --neutral: #F3F4F6;
   --kavia-dark: #1A1A1A;
   --text-color: #333333;
-  --text-secondary: rgba(51, 51, 51, 0.65);
+  --text-secondary: rgba(51, 51, 51, 0.74);
   --border-color: rgba(30,42,120,0.15);
+
+  --card-bg: #fff;
+  --card-shadow: 0 6px 24px 0 rgba(30, 42, 120, 0.14);
+  --card-radius: 17px;
+  --focus-shadow: 0 0 0 2px var(--accent), 0 4px 18px 0 rgba(65,140,154,0.08);
+
+  --sidebar-bg: #fcfcfd;
+  --sidebar-highlight: linear-gradient(90deg,var(--secondary) 0 3px,transparent 3px 100%);
+  --active-step-line: linear-gradient(90deg, var(--accent), var(--secondary) 65%);
+
+  --input-focus-border: var(--accent);
+  --input-bg: #fff;
+  --input-border: var(--secondary);
+  --input-error: #bee2f3;
 }
+
+/* Utility classes for spacing, visually-hidden */
+.visually-hidden {
+  position:absolute;
+  left:-9999px;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.m-0 { margin: 0 !important; }
+.mt-1 { margin-top: 9px !important; }
+.mb-1 { margin-bottom: 9px !important; }
+.p-0 { padding: 0 !important; }
 
 body {
   margin: 0;
