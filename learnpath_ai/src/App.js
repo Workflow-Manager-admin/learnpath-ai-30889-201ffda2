@@ -450,7 +450,11 @@ function App() {
             <div className="smart-suggestions">
               <h2>Suggestions</h2>
               {/* Suggestions area */}
-              <div className="suggestions-placeholder">AI-powered recommendations and tips will show up here.</div>
+              <SmartSuggestions
+                milestones={milestones}
+                progress={progress}
+                feedback={{}} // Can hook this to a future feedback system
+              />
             </div>
           </aside>
 
