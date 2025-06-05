@@ -576,40 +576,34 @@ function App() {
           {/* Filters area (side widget or dropdown-like box) */}
           <section className="filters-section">
             <h3>Filters</h3>
-            {/* Simple placeholder filter controls, can be expanded later */}
+            {/* Filter controls - wire up state and handlers */}
             <div className="filter-group">
               <label>
                 Difficulty:
-                <select>
-                  <option>All</option>
-                  <option>Beginner</option>
-                  <option>Intermediate</option>
-                  <option>Advanced</option>
+                <select value={filterDifficulty} onChange={handleFilterDifficulty}>
+                  {DIFFICULTY_OPTS.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
                 </select>
               </label>
             </div>
             <div className="filter-group">
               <label>
                 Platform:
-                <select>
-                  <option>All</option>
-                  <option>YouTube</option>
-                  <option>Udemy</option>
-                  <option>Coursera</option>
-                  <option>edX</option>
-                  <option>FreeCodeCamp</option>
+                <select value={filterPlatform} onChange={handleFilterPlatform}>
+                  {PLATFORM_OPTS.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
                 </select>
               </label>
             </div>
             <div className="filter-group">
               <label>
-                Time Available:
-                <select>
-                  <option>Any</option>
-                  <option>&lt; 1 hr/week</option>
-                  <option>1-3 hrs/week</option>
-                  <option>3-5 hrs/week</option>
-                  <option>5+ hrs/week</option>
+                Estimated Time:
+                <select value={filterTime} onChange={handleFilterTime}>
+                  {TIME_OPTS.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
                 </select>
               </label>
             </div>
