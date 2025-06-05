@@ -308,49 +308,58 @@ function App() {
     // Rating stars
     const stars = (r) => "★".repeat(Math.floor(r)) + (r % 1 >= 0.5 ? "½" : "");
 
+    // Determine card state for highlight classes/ARIA
+    const stepIsActive = expandedStep;
     return (
-      <li className="roadmap-step" style={{
-        background: expandedStep ? "rgba(64,145,108,0.09)" : "#fff",
-        border: `1.5px solid var(--border-color)`,
-        borderRadius: 10,
-        marginBottom: 16,
-        boxShadow: expandedStep ? "0 2px 10px 0 rgba(45,106,79,0.07)" : "none",
-        padding: "0",
-        overflow: "hidden",
-        position: "relative"
-      }}>
+      <li
+        className={
+          "roadmap-step" +
+          (stepIsActive ? " expanded active" : "")
+        }
+        aria-selected={stepIsActive}
+        tabIndex={0}
+        style={{
+          position: "relative",
+          // Background shadow/highlight handled by .css, but add inline for fallback.
+          background: stepIsActive ? "rgba(64,145,108,0.07)" : "#fff"
+        }}
+      >
+        {/* Accent line at left for expanded/active step */}
+        {stepIsActive && (
+          <span className="active-accent" aria-hidden="true"></span>
+        )}
         <button
           className="step-toggle"
           aria-expanded={expandedStep}
           aria-controls={`panel-${idx}`}
-          style={{
-            width: "100%",
-            background: "none",
-            border: "none",
-            outline: "none",
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-            padding: "20px 18px 18px 10px",
-            textAlign: "left",
-            fontWeight: 600,
-            fontSize: "1.08rem",
-            color: "var(--secondary)"
-          }}
+          tabIndex={0}
           onClick={() => toggleExpand(idx)}
+          style={{
+            // Button styles overridden by CSS, keep for fallback
+            outline: "none",
+            zIndex: 2,
+            background: "none",
+            width: "100%",
+            display: "flex",
+            alignItems: "center"
+          }}
         >
-          <span style={{
-            marginRight: 16,
-            fontSize: 16,
-            color: expandedStep ? 'var(--secondary)' : '#cfd8dc',
-            flexShrink: 0
-          }}>
+          <span
+            style={{
+              marginRight: 16,
+              fontSize: 16,
+              color: stepIsActive ? 'var(--secondary)' : '#cfd8dc',
+              flexShrink: 0
+            }}
+            aria-hidden="true"
+          >
             {expandedStep ? '▼' : '►'}
           </span>
           {statusMeta[status].icon}
-          {step.title}
-          <span
-            tabIndex={-1}
+          <span style={{ flex: "1 1 auto", minWidth: 0 }}>{step.title}</span>
+          <button
+            tabIndex={0}
+            className="step-status-badge"
             onClick={e => { e.stopPropagation(); advanceStatus(idx); }}
             title="Click to update progress"
             style={{
@@ -359,41 +368,42 @@ function App() {
               color: (status === 'not_started' ? "#444" : "#fff"),
               fontWeight: 600,
               fontSize: "0.97rem",
-              padding: "4.5px 12px",
-              borderRadius: 12,
-              minWidth: 70,
-              textAlign: 'center',
+              // padding will be handled via css
               marginRight: 4,
               opacity: 0.92,
-              cursor: 'pointer',
-              border: "none"
+              minWidth: 76,
+              border: "none",
+              textAlign: "center",
+              cursor: 'pointer'
             }}
+            aria-label={`Mark step as: ${statusMeta[status].label}`}
           >
             {statusMeta[status].label}
-          </span>
+          </button>
         </button>
-        {expandedStep &&
+        {expandedStep && (
           <div
             id={`panel-${idx}`}
             style={{
               background: "#fff",
               color: "var(--primary)",
               padding: "0 26px 18px 40px"
-            }}>
-            <div style={{ fontSize: "1rem", fontWeight: 400, margin: "5px 0 10px 0", lineHeight: 1.7 }}>
+            }}
+          >
+            <div style={{ fontSize: "1rem", fontWeight: 400, margin: "8px 0 13px 0", lineHeight: 1.7 }}>
               {step.description}
             </div>
             <div style={{
-              fontSize: "0.95rem",
-              margin: "6px 0 0 0",
+              fontSize: "0.98rem",
+              margin: "7px 0 0 0",
               color: "var(--primary)",
-              borderLeft: "3px solid var(--secondary)",
-              padding: "7px 0 7px 20px",
-              background: "#f5f7fa",
-              borderRadius: "8px"
+              borderLeft: "4.2px solid var(--secondary)",
+              padding: "10px 0 10px 18px",
+              background: "#f8fbfa",
+              borderRadius: "9px"
             }}>
-              <strong>Resources:</strong>
-              <ul style={{ margin: "10px 0 0 0", paddingLeft: 0 }}>
+              <strong style={{ fontWeight: 700 }}>Resources:</strong>
+              <ul style={{ margin: "11px 0 0 0", paddingLeft: 0 }}>
                 {resourceList.length === 0 ? (
                   <li style={{ color: "#888" }}>
                     <em>
@@ -405,10 +415,10 @@ function App() {
                 ) : (
                   resourceList.map((res, ri) => (
                     <li key={ri} style={{
-                      marginBottom: 9,
+                      marginBottom: 8,
                       display: "flex",
                       alignItems: "center",
-                      lineHeight: 1.45,
+                      lineHeight: 1.36,
                       fontSize: "0.97em"
                     }}>
                       <a
@@ -432,7 +442,7 @@ function App() {
                       <span style={{
                         color: "#f5ad00",
                         marginRight: 7,
-                        fontSize: "1em"
+                        fontSize: "1.05em"
                       }}>{stars(res.rating)}</span>
                       <span style={{
                         marginRight: 6,
@@ -460,7 +470,7 @@ function App() {
               </ul>
             </div>
           </div>
-        }
+        )}
       </li>
     );
   };
@@ -540,10 +550,17 @@ function App() {
                   }}>
                     {calculateProgress().completed} of {calculateProgress().total} completed
                   </div>
-                  <ol style={{ listStyle: 'decimal inside', margin: "0 0 0 10px", padding: 0 }}>
+                  <ol
+                    style={{ listStyle: 'decimal inside', margin: "0 0 0 10px", padding: 0 }}
+                    aria-label="Learning Step Progress"
+                    role="list"
+                  >
                     {milestones.map((step, idx) => (
                       <li
                         key={idx}
+                        aria-current={progress[idx] !== "completed" && progress[idx] !== "skipped" ? "step" : undefined}
+                        className={progress[idx] !== "completed" && progress[idx] !== "skipped" ? "active" : ""}
+                        tabIndex={0}
                         style={{
                           fontSize: "1rem",
                           color: "var(--secondary)",
@@ -553,7 +570,7 @@ function App() {
                           alignItems: 'center'
                         }}>
                         {statusMeta[progress[idx] || 'not_started'].icon}
-                        {step.title}
+                        <span style={{ marginRight: 0, marginLeft: 2 }}>{step.title}</span>
                       </li>
                     ))}
                   </ol>
