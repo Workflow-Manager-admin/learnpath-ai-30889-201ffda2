@@ -162,19 +162,35 @@ body {
 }
 
 .goal-input {
-  flex: 0 1 420px;
-  border: 2px solid var(--secondary);
-  border-radius: 8px;
-  font-size: 1.07rem;
-  padding: 12px 13px;
-  background: #fff;
+  flex: 0 1 480px;
+  border: 2px solid var(--input-border);
+  border-radius: 11px;
+  font-size: 1.1rem;
+  padding: 14px 16px;
+  background: var(--input-bg);
   color: var(--primary);
-  transition: border-color 0.16s;
+  font-weight: 500;
+  line-height: 1.61;
+  box-shadow: 0 1px 10px 0 rgba(30,42,120,0.03);
+  transition: border-color 0.19s, box-shadow 0.19s, background 0.12s;
   outline: none;
-  margin-right: 8px;
+  margin-right: 9px;
+  width: 100%;
 }
-.goal-input:focus {
-  border-color: var(--accent);
+.goal-input:focus, .goal-input:active {
+  border-color: var(--input-focus-border);
+  background: #f7fdff;
+  box-shadow: var(--focus-shadow);
+}
+.goal-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 1;
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+.goal-input[aria-invalid="true"] {
+  border-color: var(--input-error);
+  background: #fff7f5;
 }
 
 .goal-search-btn {
