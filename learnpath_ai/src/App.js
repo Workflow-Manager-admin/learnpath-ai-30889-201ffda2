@@ -97,20 +97,38 @@ function App() {
   }
 
   // Handle form submit: analyze goal and display milestones, reset states
-  const handleGoalSubmit = (e) => {
+  const handleGoalSubmit = async (e) => {
     e.preventDefault();
     const breakdown = mockBreakdownGoal(goalInput);
     setMilestones(breakdown);
+
     // Reset expanded and progress state for new roadmap
-    let newProgress = {};
     let newExpanded = {};
     breakdown.forEach((_, idx) => {
-      newProgress[idx] = 'not_started';
       newExpanded[idx] = false;
     });
     if (breakdown.length > 0) newExpanded[0] = true; // Expand the first by default
-    setProgress(newProgress);
     setExpanded(newExpanded);
+
+    // Load progress from Firebase if available
+    setLoadingProgress(true);
+    const userId = getSessionId();
+    let loadedProgress = {};
+    try {
+      const saved = await fetchUserProgress(userId, goalInput);
+      if (saved && typeof saved === "object") {
+        // Only use indices found in this roadmap
+        for (let i = 0; i < breakdown.length; ++i) {
+          loadedProgress[i] = saved[i] || 'not_started';
+        }
+      } else {
+        for (let i = 0; i < breakdown.length; ++i) loadedProgress[i] = 'not_started';
+      }
+    } catch {
+      for (let i = 0; i < breakdown.length; ++i) loadedProgress[i] = 'not_started';
+    }
+    setProgress(loadedProgress);
+    setLoadingProgress(false);
   };
 
   // Toggle expand/collapse for a step
@@ -148,6 +166,14 @@ function App() {
     let completed = Object.values(progress).filter(x => x === 'completed').length;
     return { completed, total: milestones.length };
   };
+
+  // On first render: if there's an initial goalInput (maybe prefilled), attempt to load milestones + saved progress.
+  useEffect(() => {
+    if (goalInput && milestones.length === 0) {
+      handleGoalSubmit({ preventDefault: () => {} });
+    }
+    // eslint-disable-next-line
+  }, []);
 
   // Step Render: collapsible with progress, title, detail, resource aggregation
   const RoadmapStep = ({ idx, step }) => {
