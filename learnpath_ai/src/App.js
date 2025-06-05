@@ -3,6 +3,56 @@ import './App.css';
 import { getMockResourcesForStep } from './resourceStubs';
 import { saveUserProgress, fetchUserProgress } from './firebase';
 
+// Difficulty filter options (display label, filter value pairs)
+const DIFFICULTY_OPTS = [
+  { label: "All", value: "all" },
+  { label: "Beginner", value: "Beginner" },
+  { label: "Intermediate", value: "Intermediate" },
+  { label: "Advanced", value: "Advanced" }
+];
+const PLATFORM_OPTS = [
+  { label: "All", value: "all" },
+  { label: "YouTube", value: "YouTube" },
+  { label: "Udemy", value: "Udemy" },
+  { label: "Coursera", value: "Coursera" },
+  { label: "edX", value: "edX" },
+  { label: "FreeCodeCamp", value: "FreeCodeCamp" },
+  { label: "W3Schools", value: "W3Schools" },
+  { label: "GeeksforGeeks", value: "GeeksforGeeks" },
+  { label: "Medium", value: "Medium" },
+  { label: "Dev.to", value: "Dev.to" },
+  { label: "GitHub", value: "GitHub" },
+];
+const TIME_OPTS = [
+  { label: "Any", value: "any" },
+  { label: "< 30 min", value: "<30" },
+  { label: "30-60 min", value: "30-60" },
+  { label: "1-3 hrs", value: "1-3" },
+  { label: "3+ hrs", value: "3+" }
+];
+
+// Helper to parse estimated time string to match time filters
+function getResourceMinutes(raw) {
+  // Accepts: "1 hr", "30 min", "1.5 hrs", "6 hrs", "10+ hrs", "Varies", etc.
+  if (!raw) return null;
+  let s = raw.toLowerCase();
+  if (s.includes("varies") || s === "browse") return null; // non-numeric
+  if (s.includes("+")) s = s.replace("+", "");
+  let mins = 0;
+  if (s.includes("hr")) {
+    let match = s.match(/([0-9.]+)\s*hr/);
+    if (match) mins += parseFloat(match[1]) * 60;
+    // Handle also "hr" plus "min"
+    let m = s.match(/([0-9]+)\s*min/);
+    if (m) mins += parseInt(m[1]);
+    return mins;
+  } else if (s.includes("min")) {
+    let match = s.match(/([0-9.]+)\s*min/);
+    if (match) return parseFloat(match[1]);
+  }
+  return null;
+}
+
 /**
  * PUBLIC_INTERFACE
  * Main App container for LearnPath AI.
