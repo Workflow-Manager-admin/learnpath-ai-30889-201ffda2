@@ -151,7 +151,7 @@ body {
 .progress-placeholder, .suggestions-placeholder {
   font-size: 0.96rem;
   color: var(--text-secondary);
-  background: rgba(0,0,0,0.06);
+  background: var(--neutral);
   border-radius: 7px;
   padding: 16px;
   margin-top: 6px;
