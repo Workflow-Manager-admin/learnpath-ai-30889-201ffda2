@@ -670,3 +670,29 @@ body {
   z-index: 5;
   position: relative;
 }
+
+/* Accessibility: larger clickable area for status chips (badge/buttons) in .roadmap-step */
+.roadmap-step .step-status-badge,
+.progress-tracker li .statusBadge {
+  min-width: 86px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  border-radius: 13px;
+  padding: 3.5px 10px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.14s, background 0.14s;
+  outline: none;
+  border: none;
+}
+
+.roadmap-step .step-status-badge:focus, .roadmap-step .step-status-badge:active {
+  box-shadow: var(--focus-shadow);
+  background: var(--secondary);
+  color: #fff;
+}
+
