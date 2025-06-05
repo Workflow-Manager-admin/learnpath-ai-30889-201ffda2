@@ -472,7 +472,22 @@ function App() {
       <nav className="navbar">
         <div className="container">
           <div className="logo">
-            <span className="logo-symbol">*</span> LearnPath AI
+            <span className="logo-svg" aria-label="logo" title="NeoLearn Logo" style={{display: "flex", alignItems: "center", marginRight: 8}}>
+              {/* Simple SVG: stylized "path" upward with book motif, themed colors */}
+              <svg width="30" height="28" viewBox="0 0 30 28" fill="none" xmlns="http://www.w3.org/2000/svg"
+                style={{display: "block", marginRight: 7, minWidth: 26}}>
+                {/* Book base */}
+                <rect x="2.5" y="14" width="11" height="9" rx="2.5" fill="#1E2A78" stroke="#00C2C7" strokeWidth="1.4"/>
+                <rect x="16.5" y="14" width="11" height="9" rx="2.5" fill="#1E2A78" stroke="#FFC94A" strokeWidth="1.4"/>
+                {/* Book fold */}
+                <rect x="14" y="14" width="2" height="9" fill="#00C2C7" />
+                {/* Path upward - curve */}
+                <path d="M 15 19 Q 16.5 10 6 6" stroke="#00C2C7" strokeWidth="2" fill="none"/>
+                {/* Path upward - arrow tip */}
+                <polygon points="6,6 8.5,4 7.2,7" fill="#FFC94A"/>
+              </svg>
+            </span>
+            NeoLearn
           </div>
           {/* Placeholder for global actions/settings */}
         </div>
